@@ -33,6 +33,10 @@ public class Customer {
         this.scores = scores;
     }
 
+    public Customer clone(){
+        return new Customer(id, name, scores);
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -49,16 +53,20 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (id != customer.id) return false;
-        if (scores != customer.scores) return false;
-        return name != null ? name.equals(customer.name) : customer.name == null;
+        return id == customer.id;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (int) (scores ^ (scores >>> 32));
+        //result = 31 * result + (name != null ? name.hashCode() : 0);
+        //result = 31 * result + (int) (scores ^ (scores >>> 32));
         return result;
+    }
+
+    public static void main(String[] args) {
+        Customer customer = new Customer(1L, "Ivan", 233);
+        Customer customer2 = new Customer(1L, "IvanChangedName", 243);
+        System.out.println(customer.hashCode() == customer2.hashCode());
     }
 }
